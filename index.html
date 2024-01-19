@@ -1,1 +1,218 @@
-Hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniverseWars winrate calculator</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+</head>
+<body>
+    <h1>UniverseWars: Ascension Probability Calculator</h1>
+    <h2>Input your skills and quest</h2>
+    <div class="Inputdiv">
+        
+        <p2>&nbsp;</p2> 
+        <h3>Input values</h3>
+        <p2>&nbsp;</p2> 
+        <p>Strength:</p>
+        <input type="text" name="Strength" id="Strength">
+        <p>Defense:</p>
+        <input type="text" name="Defense" id="Defense">
+        <p>Life:</p>
+        <input type="text" name="Life" id="Life">
+        <p>Crit:</p>
+        <input type="text" name="Crit" id="Crit">
+        <p>Accuracy:</p>
+        <input type="text" name="Accuracy" id="Accuracy">
+        <p>Evasion:</p>
+        <input type="text" name="Evasion" id="Evasion">
+        <p>Crit prob:</p>
+        <input type="text" name="Critprob" id="Critprob">
+        <p>Quest:</p>
+        <input type="text" name="Quest" id="Quest">
+        
+        <div class="Calculatediv">
+            <p2>&nbsp;</p2> 
+            <input type="button" onclick="calculate()" value="Calculate">
+            <p2>&nbsp;</p2> 
+        </div>
+        <div class="Refdiv">
+            <p2>&nbsp;</p2> 
+            <input type="button" onclick="Ref()" value="Ref Case">
+            <p2>&nbsp;</p2> 
+        </div>
+    </div>
+    
+    <div class="Outputdiv">
+        <p2>&nbsp;</p2> 
+        <h3>Output values</h3>
+        <p2>&nbsp;</p2> 
+        <p>Winning Probability:</p>
+        <input type="text" name="wp" id="wp">
+        
+    </div>
+
+   
+    <script>
+        function calculate(){
+            
+            //Physical properties
+            var strength = JSON.parse(document.getElementById("Strength").value);
+            var defense = parseFloat(document.getElementById("Defense").value);
+            var life = parseFloat(document.getElementById("Life").value);
+            var crit = parseFloat(document.getElementById("Crit").value);
+            var accuracy = parseFloat(document.getElementById("Accuracy").value);
+            var evasion = parseFloat(document.getElementById("Evasion").value);
+            var quest = parseFloat(document.getElementById("Quest").value);
+            var critprob = parseFloat(document.getElementById("Critprob").value);
+
+            const enemyvalue = [0, 8, 25, 45, 70, 100, 135, 175, 215, 260, 310];
+            const critvalue = [0, 25, 25, 30, 30, 35, 35, 40, 40, 45, 45];
+            const value = enemyvalue[quest];
+
+            let Nfights = 100000;
+            let printBattle = false;
+            let win1 = 0;
+            let win2 = 0;
+
+            for (let i = 0; i < Nfights; i++) {
+                let salud1 = life * 5;
+                let salud2 = enemyvalue[quest] * 5;
+                let strength1 = strength;
+                let strength2 = enemyvalue[quest];
+                let defense1 = defense;
+                let defense2 = enemyvalue[quest];
+                let crit1 = crit;
+                let crit2 = enemyvalue[quest];
+                let accuracy1 = accuracy;
+                let accuracy2 = enemyvalue[quest];
+                let evasion1 = evasion;
+                let evasion2 = enemyvalue[quest];
+                let critprob1 = critprob;
+                let critprob2 = critvalue[quest];
+
+                
+
+                if (printBattle){
+                    console.log("------------Start Battle------------");
+                    console.log("--------BOT 1-------")
+                    console.log("Life: " + salud1);
+                    console.log("Strength: " + strength1);
+                    console.log("Defense: " + defense1);
+                    console.log("Crit: " + crit1);
+                    console.log("Accuracy: " + accuracy1);
+                    console.log("Evasion: " + evasion1);
+                    console.log("Critprob: " + critprob1);
+                    console.log("--------BOT 2-------")
+                    console.log("Life: " + salud2);
+                    console.log("Strength: " + strength2);
+                    console.log("Defense: " + defense2);
+                    console.log("Crit: " + crit2);
+                    console.log("Accuracy: " + accuracy2);
+                    console.log("Evasion: " + evasion2);
+                    console.log("Critprob: " + critprob2);
+                } 
+
+                while (salud1 >= 0 && salud2 >= 0) {
+                    let randomNumber = Math.floor(Math.random() * 2001);
+                    let randomDecimal = randomNumber / 2000.0;
+                    let random1 = 0.9 + 0.2 * randomDecimal;
+                    let random2 = 0.9 + 0.2 * randomDecimal;
+
+                    let attack1 = strength1 * random1;
+                    let attack2 = strength2 * random2;
+                    
+                    let defensebot1 = defense1 / (defense1 + 200);
+                    let defensebot2 = defense2 / (defense2 + 200.0);
+
+                    let damageReceivedNormal1 = attack2 - attack2 * defensebot1;
+                    let damageReceivedNormal2 = attack1 - attack1 * defensebot2;
+
+                    let damageReceivedCritical1 = damageReceivedNormal1 + crit2;
+                    let damageReceivedCritical2 = damageReceivedNormal2 + crit1;
+
+                    let hitProb1 = 75 + (accuracy1 - evasion2) / 4.0;
+                    let hitProb2 = 75 + (accuracy2 - evasion1) / 4.0;
+                    let numeroAleatorio1 = Math.floor(Math.random() * 100) + 1;
+                    let numeroAleatorio2 = Math.floor(Math.random() * 100) + 1;
+                    let numeroAleatorio3 = Math.floor(Math.random() * 100) + 1;
+                    let numeroAleatorio4 = Math.floor(Math.random() * 100) + 1;
+
+                    // Start figth!
+                    let damageReceived2 = 0.0;
+                    let damageReceived1 = 0.0;
+
+                    // Bot 1 attacking
+                    if (numeroAleatorio1 < critprob1) {damageReceived2 = damageReceivedCritical2;}
+                    else {damageReceived2 = damageReceivedNormal2;}
+
+                    if (numeroAleatorio3 < hitProb1) damageReceived2 = damageReceived2;
+                    else damageReceived2 = 0.0;
+
+                    salud2 = salud2 - damageReceived2;
+
+                    if (printBattle) console.log("**Bot 1 attack: " + damageReceived2);
+
+                    // check bot 2 life
+                    if (salud2 <= 0) {
+                        win1++;
+                        break;
+                    }
+
+                    // Bot 2 attacking
+                    if (numeroAleatorio2 < critprob2) damageReceived1 = damageReceivedCritical1;
+                    else damageReceived1 = damageReceivedNormal1;
+
+                    if (numeroAleatorio4 < hitProb2) damageReceived1 = damageReceived1;
+                    else damageReceived1 = 0.0;
+
+                    salud1 = salud1 - damageReceived1;
+
+                    if (printBattle) {
+                        console.log("**Bot 2 attack: " + damageReceived1);
+                        console.log("***Life 1: " + salud1);
+                        console.log("***Life 2: " + salud2);
+                    }
+
+                    // check bot 1 life
+                    if (salud1 <= 0) {
+                        win2++;
+                        break;
+                    }
+
+                }
+                if (printBattle) console.log("Bot_1 wins: " + win1 + " || Bot_2 wins: " + win2);
+    
+            }  
+            let probwin = 100 * (win1 / (win1 + win2));
+
+            if (printBattle) {
+                console.log("******************** END ALL BATTLES ********************");
+                console.log("");
+                console.log("Bot_1 wins: " + win1 + " || Bot_2 wins: " + win2);
+                console.log("Probability win: " + probwin);
+            }
+
+            document.getElementById("wp").value = probwin;
+
+            
+        }
+    
+       
+        function Ref(){
+            document.getElementById('Strength').value = strength.nombre;
+            document.getElementById('Defense').value = 135;
+            document.getElementById('Life').value = 135;
+            document.getElementById('Crit').value = 135;
+            document.getElementById('Accuracy').value = 135;
+            document.getElementById('Evasion').value = 135;
+            document.getElementById('Critprob').value = 45;
+            document.getElementById('Quest').value = 6;
+
+            calculate();
+        }
+    </script>
+</body>
+</html>
