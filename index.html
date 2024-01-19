@@ -59,7 +59,6 @@
         function calculate(){
             
             //Physical properties
-            var prueba = JSON.parse(document.getElementById("Strength").value);
             var strength = parseFloat(document.getElementById("Strength").value);
             var defense = parseFloat(document.getElementById("Defense").value);
             var life = parseFloat(document.getElementById("Life").value);
@@ -203,6 +202,7 @@
     
        
         function Ref(){
+            var prueba = JSON.parse(document.getElementById("Strength").value);
             document.getElementById('Defense').value = 135;
             document.getElementById('Life').value = 135;
             document.getElementById('Crit').value = 135;
