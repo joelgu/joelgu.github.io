@@ -59,7 +59,8 @@
         function calculate(){
             
             //Physical properties
-            var strength = JSON.parse(document.getElementById("Strength").value);
+            var prueba = document.getElementById("Strength").value;
+            var strength = parseFloat(document.getElementById("Strength").value);
             var defense = parseFloat(document.getElementById("Defense").value);
             var life = parseFloat(document.getElementById("Life").value);
             var crit = parseFloat(document.getElementById("Crit").value);
@@ -202,7 +203,7 @@
     
        
         function Ref(){
-            document.getElementById('Strength').value = "dssd";
+            document.getElementById('Strength').value = prueba.nombre;
             document.getElementById('Defense').value = 135;
             document.getElementById('Life').value = 135;
             document.getElementById('Crit').value = 135;
