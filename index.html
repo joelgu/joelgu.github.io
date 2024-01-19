@@ -33,7 +33,7 @@
         <p>Quest:</p>
         <input type="text" name="Quest" id="Quest">
         <p>SALIDA</p>
-        <textarea name="Text1" cols="40" rows="5"></textarea>
+        <textarea id="SALIDA" name="Text1" cols="40" rows="5"></textarea>
         <div class="Calculatediv">
             <p2>&nbsp;</p2> 
             <input type="button" onclick="calculate()" value="Calculate">
@@ -211,9 +211,9 @@
             document.getElementById('Evasion').value = 135;
             document.getElementById('Critprob').value = 45;
             document.getElementById('Quest').value = 6;
-            document.getElementById('Text1').value = prueba[0].id;
-            document.getElementById('Text1').value += " "+prueba[0].strength;
-            document.getElementById('Text1').value += " "+prueba.length;
+            document.getElementById('SALIDA').value = prueba[0].id;
+            document.getElementById('SALIDA').value += " "+prueba[0].strength;
+            document.getElementById('SALIDA').value += " "+prueba.length;
         }
     </script>
 </body>
